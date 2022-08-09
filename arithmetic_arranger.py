@@ -23,7 +23,6 @@ def arithmetic_arranger(problems, *args):
     longest_val = max(len(operation[0]),len(operation[2]))
     width= longest_val +2
 
-    # output = f"{operation[0]:>{width}}\n{f'{operation[1]} {operation[2]}':>{width}}\n{'-'*width}"
     
     l1=f"{operation[0]:>{width}}"
     l2=operation[1] + f"{operation[2]:>{width-1}}"

@@ -1,4 +1,4 @@
-def arithmetic_arranger(problems):
+def arithmetic_arranger(problems, *args):
   if len(problems)>5:
     return "Error: Too many problems."
   
@@ -23,24 +23,36 @@ def arithmetic_arranger(problems):
     longest_val = max(len(operation[0]),len(operation[2]))
     width= longest_val +2
 
-    output = f"{operation[0]:>{width}}\n{f'{operation[1]} {operation[2]}':>{width}}\n{'-'*width}"
+    # output = f"{operation[0]:>{width}}\n{f'{operation[1]} {operation[2]}':>{width}}\n{'-'*width}"
     
     l1=f"{operation[0]:>{width}}"
-    l2=f"{operation[1]} {operation[2]}:>{width}"
+    l2=operation[1] + f"{operation[2]:>{width-1}}"
     d='-'*width
     
     try: 
-      arranged_problems[0]=l1
+      arranged_problems[0] += (' '*4)+l1
     except IndexError:
-      arranged_problems.append((' '*4)+l1)
+      arranged_problems.append(l1)
     
     try: 
-      arranged_problems[1]=l2
+      arranged_problems[1] += (' '*4)+l2
     except IndexError:
-      arranged_problems.append((' '*4)+l2)
-    try: 
-      arranged_problems[2]=d
-    except IndexError:
-      arranged_problems.append((' '*4)+d)
+      arranged_problems.append(l2)
     
-  return arranged_problems
+    try: 
+      arranged_problems[2] += (' '*4)+d
+    except IndexError:
+      arranged_problems.append(d)
+
+    if args:
+      ans= int(operation[0]) + int(operation[2]) if operation[1] == '+' else int(operation[0]) - int(operation[2])
+      a = f"{str(ans):>{width}}"
+      
+      try: 
+        arranged_problems[3] += (' '*4)+a
+      except IndexError:
+        arranged_problems.append(a)
+  
+  output = f"{arranged_problems[0]}\n{arranged_problems[1]}\n{arranged_problems[2]}"
+  output = output +f"\n{arranged_problems[3]}" if args else output
+  return output
